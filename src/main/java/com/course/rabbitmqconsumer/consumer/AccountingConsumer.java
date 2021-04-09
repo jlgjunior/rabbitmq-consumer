@@ -13,13 +13,13 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Service
+//@Service
 public class AccountingConsumer {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 	private static final Logger logger = LoggerFactory.getLogger(AccountingConsumer.class);
 	
-	@RabbitListener(queues = "q.hr.accounting")
+	//@RabbitListener(queues = "q.hr.accounting")
 	public void listen(String message) {
 		Optional<Employee> employee = null;
 		try {

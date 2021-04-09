@@ -8,22 +8,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
-import com.course.rabbitmqconsumer.entity.Employee;
+import com.course.rabbitmqconsumer.entity.Picture;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//@Service
-public class MarketingConsumer {
+@Service
+public class PictureImageConsumer {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
-	private static final Logger logger = LoggerFactory.getLogger(MarketingConsumer.class);
+	private static final Logger logger = LoggerFactory.getLogger(PictureImageConsumer.class);
 	
-	//@RabbitListener(queues = "q.hr.marketing")
+	@RabbitListener(queues = "q.picture.image")	
 	public void listen(String message) {
-		Optional<Employee> employee = null;
+		Optional<Picture> picture = Optional.empty();
 		try {
-			employee = Optional.of(objectMapper.readValue(message, Employee.class));
+			picture = Optional.of(objectMapper.readValue(message, Picture.class));
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -31,7 +31,7 @@ public class MarketingConsumer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		employee.ifPresentOrElse(value -> {logger.info("On marketing, employee is {}", value);}, () -> logger.info("Marketing Consumer Error"));			
+		picture.ifPresentOrElse(value -> {logger.info("On Picture Image, picture is {}", value);}, () -> logger.info("Picture Image Consumer Error"));			
 	}
 	
 }
