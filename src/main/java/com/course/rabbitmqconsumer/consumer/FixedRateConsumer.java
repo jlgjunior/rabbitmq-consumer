@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class FixedRateConsumer {
 
 	private final Logger logger = LoggerFactory.getLogger(FixedRateConsumer.class);
 	
-	@RabbitListener(queues = "course.fixedrate", concurrency = "3")
+	//@RabbitListener(queues = "course.fixedrate", concurrency = "3")
 	public void listen(String message) {
 		logger.info("Consuming {} on thread {}", message, Thread.currentThread().getName());
 		try {

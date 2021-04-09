@@ -13,13 +13,13 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//@Service
-public class EmployeeJsonConsumer {
+@Service
+public class AccountingConsumer {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
-	private static final Logger logger = LoggerFactory.getLogger(EmployeeJsonConsumer.class);
+	private static final Logger logger = LoggerFactory.getLogger(AccountingConsumer.class);
 	
-//	@RabbitListener(queues = "course.employee")
+	@RabbitListener(queues = "q.hr.accounting")
 	public void listen(String message) {
 		Optional<Employee> employee = null;
 		try {
@@ -31,7 +31,7 @@ public class EmployeeJsonConsumer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		employee.ifPresentOrElse(value -> {logger.info(value.toString());}, () -> logger.info("Error"));		
+		employee.ifPresentOrElse(value -> {logger.info("On accounting, employee is {}", value);}, () -> logger.info("Accounting Consumer Error"));		
 	}
 	
 }
