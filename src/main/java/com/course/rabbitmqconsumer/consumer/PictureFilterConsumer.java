@@ -13,13 +13,13 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Service
+//@Service
 public class PictureFilterConsumer {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 	private static final Logger logger = LoggerFactory.getLogger(PictureFilterConsumer.class);
 	
-	@RabbitListener(queues = "q.picture.filter")	
+	//@RabbitListener(queues = "q.picture.filter")	
 	public void listen(String message) {
 		Optional<Picture> picture = Optional.empty();
 		try {
