@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class PictureErrorConsumer {
 		picture = Optional.of(objectMapper.readValue(message, Picture.class));
 		
 		if (picture.get().getSize() > 9000) {
-			throw new IllegalArgumentException("Picture too large : " + picture);
+			throw new AmqpRejectAndDontRequeueException("Picture too large : " + picture);
 		}
 		
 		picture.ifPresentOrElse(value -> {logger.info("On Picture Image, picture is {}", value);}, () -> logger.info("Picture Image Consumer Error"));			
