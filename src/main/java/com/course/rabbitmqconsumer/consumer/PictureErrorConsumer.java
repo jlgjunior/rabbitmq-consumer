@@ -13,24 +13,21 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//@Service
-public class PictureImageConsumer {
+@Service
+public class PictureErrorConsumer {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
-	private static final Logger logger = LoggerFactory.getLogger(PictureImageConsumer.class);
+	private static final Logger logger = LoggerFactory.getLogger(PictureErrorConsumer.class);
 	
-	//@RabbitListener(queues = "q.picture.image")	
-	public void listen(String message) {
+	@RabbitListener(queues = "q.picture.error")	
+	public void listen(String message) throws JsonParseException, JsonMappingException, IOException {
 		Optional<Picture> picture = Optional.empty();
-		try {
-			picture = Optional.of(objectMapper.readValue(message, Picture.class));
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		picture = Optional.of(objectMapper.readValue(message, Picture.class));
+		
+		if (picture.get().getSize() > 9000) {
+			throw new IllegalArgumentException("Picture too large : " + picture);
 		}
+		
 		picture.ifPresentOrElse(value -> {logger.info("On Picture Image, picture is {}", value);}, () -> logger.info("Picture Image Consumer Error"));			
 	}
 	
