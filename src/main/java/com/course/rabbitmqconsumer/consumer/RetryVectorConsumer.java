@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 
-@Service
+//@Service
 public class RetryVectorConsumer {
 
 	private static final String DEAD_EXCHANGE_NAME = "x.guideline.dead";
@@ -28,7 +28,7 @@ public class RetryVectorConsumer {
 		this.dlxProcessingErrorHandler = new DlxProcessingErrorHandler(DEAD_EXCHANGE_NAME);
 	}
 	
-	@RabbitListener(queues = "q.guideline.vector.work")
+	//@RabbitListener(queues = "q.guideline.vector.work")
 	public void listen(Message message, Channel channel) throws InterruptedException, JsonParseException, IOException{
 		try {
 			Picture picture = objectMapper.readValue(message.getBody(), Picture.class);
