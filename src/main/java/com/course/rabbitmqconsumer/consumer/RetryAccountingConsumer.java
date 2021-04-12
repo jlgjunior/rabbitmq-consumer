@@ -35,14 +35,14 @@ public class RetryAccountingConsumer {
 		try {
 			Employee employee = objectMapper.readValue(message.getBody(), Employee.class);
 			if (StringUtils.isEmpty(employee.getName())) {
-				throw new IOException("Invalid name");
+				throw new IllegalArgumentException("Invalid name");
 			}
 			else {
 				logger.info("Creating employee and publishing on accounting: " + employee);
 				channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 			}
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 			logger.warn("Error processing accounting employee message: " + new String(message.getBody() + " : " + e.getMessage()));
 			dlxProcessingErrorHandler.handleErrorProcessingMessage(message, channel);
 		}

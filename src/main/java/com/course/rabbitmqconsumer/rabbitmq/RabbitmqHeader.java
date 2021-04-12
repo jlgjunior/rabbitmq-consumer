@@ -26,10 +26,9 @@ public class RabbitmqHeader {
 					.ifPresent(value -> this.setxFirstDeathReason(value.toString()));
 			
 			List<Map<String, Object>> xDeaths = (List<Map<String, Object>>) headers.get("x-death");
-			
-			Optional.ofNullable(xDeaths).
-				ifPresent(list -> {
-					list.stream().map(value -> {
+			Optional.ofNullable(xDeaths).ifPresent(list -> System.out.println(list.stream().count()));
+			Optional.ofNullable(xDeaths)
+				.ifPresent(list -> list.stream().map(v -> v).forEach(value -> {						
 						RabbitmqHeaderXDeath rabbitmqHeaderXDeath = new RabbitmqHeaderXDeath();
 						Optional
 							.ofNullable(value.get("reason"))
@@ -52,12 +51,13 @@ public class RabbitmqHeader {
 							.ifPresent(routingKeys -> rabbitmqHeaderXDeath.setRoutingKeys((List<String>) routingKeys));
 						
 						this.xDeaths.add(rabbitmqHeaderXDeath);
-						return value;
-					}
-					);
-				}
+						System.out.println(rabbitmqHeaderXDeath);
 						
-			);
+					}
+					)
+				);
+				
+				
 		}
 	}
 	
@@ -67,7 +67,9 @@ public class RabbitmqHeader {
 				.stream()
 				.map(xDeath -> xDeath)
 				.filter(xDeath -> xDeath.getQueue().toLowerCase().endsWith(KEYWORD_QUEUE_WAIT) && xDeath.getExchange().toLowerCase().endsWith(KEYWORD_QUEUE_WAIT))
-				.count();
+				.findFirst()
+				.get()
+				.getCount();
 	}
 
 	public List<RabbitmqHeaderXDeath> getxDeaths() {
