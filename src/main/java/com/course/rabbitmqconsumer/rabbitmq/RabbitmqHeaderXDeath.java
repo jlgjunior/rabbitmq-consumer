@@ -6,12 +6,12 @@ import java.util.List;
 public class RabbitmqHeaderXDeath {
 
 	private int count;
+
 	private String exchange;
 	private String queue;
 	private String reason;
 	private List<String> routingKeys;
 	private Date time;
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -110,6 +110,12 @@ public class RabbitmqHeaderXDeath {
 
 	public void setTime(Date time) {
 		this.time = time;
+	}
+
+	@Override
+	public String toString() {
+		return "RabbitmqHeaderXDeath [count=" + count + ", exchange=" + exchange + ", queue=" + queue + ", reason="
+				+ reason + ", routingKeys=" + routingKeys + ", time=" + time + "]";
 	}
 
 }
