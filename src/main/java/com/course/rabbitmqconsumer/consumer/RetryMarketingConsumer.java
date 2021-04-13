@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 
-@Service
+//@Service
 public class RetryMarketingConsumer {
 
 	private static final Logger logger = LoggerFactory.getLogger(RetryMarketingConsumer.class);
@@ -24,7 +24,7 @@ public class RetryMarketingConsumer {
 		this.objectMapper = new ObjectMapper();
 	}
 	
-	@RabbitListener(queues = "q.guideline2.marketing.work")
+	//@RabbitListener(queues = "q.guideline2.marketing.work")
 	public void listen(Message message, Channel channel) throws InterruptedException, JsonParseException, IOException{
 		Employee employee = objectMapper.readValue(message.getBody(), Employee.class);
 		logger.info("Creating employee and publishing on marketing: " + employee);
