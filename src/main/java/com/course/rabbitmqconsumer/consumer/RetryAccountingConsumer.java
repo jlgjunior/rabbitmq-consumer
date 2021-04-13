@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 
-@Service
+//@Service
 public class RetryAccountingConsumer {
 
 	private static final String DEAD_EXCHANGE_NAME = "x.guideline2.dead";
@@ -30,7 +30,7 @@ public class RetryAccountingConsumer {
 		this.dlxProcessingErrorHandler = new DlxFanoutProcessingErrorHandler(DEAD_EXCHANGE_NAME, ROUTING_KEY);
 	}
 	
-	@RabbitListener(queues = "q.guideline2.accounting.work")
+	//@RabbitListener(queues = "q.guideline2.accounting.work")
 	public void listen(Message message, Channel channel) throws InterruptedException, JsonParseException, IOException{
 		try {
 			Employee employee = objectMapper.readValue(message.getBody(), Employee.class);
