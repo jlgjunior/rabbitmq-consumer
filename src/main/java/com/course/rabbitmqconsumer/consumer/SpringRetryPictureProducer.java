@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Service
+//@Service
 public class SpringRetryPictureProducer {
 
 	@Autowired
@@ -22,7 +22,7 @@ public class SpringRetryPictureProducer {
 	private ObjectMapper objectMapper = new ObjectMapper();
 	private static final Logger logger = LoggerFactory.getLogger(SpringRetryPictureProducer.class);
 	
-	@RabbitListener(queues = "q.spring.image.work")
+	//@RabbitListener(queues = "q.spring.image.work")
 	public void listenImage(String message) throws IOException {
 		Picture picture = objectMapper.readValue(message, Picture.class);
 		logger.info("Consuming image {}", picture.getName());
@@ -34,7 +34,7 @@ public class SpringRetryPictureProducer {
 		logger.info("Creating thumbnail for image {}", picture.getName());
 	}
 	
-	@RabbitListener(queues = "q.spring.vector.work")
+	//@RabbitListener(queues = "q.spring.vector.work")
 	public void listenVector(String message) throws JsonMappingException, JsonProcessingException {
 
 		Picture picture = objectMapper.readValue(message, Picture.class);
